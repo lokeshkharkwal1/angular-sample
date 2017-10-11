@@ -1,0 +1,133 @@
+﻿<div class="container">
+    <h4>{{addemployeeObj.Title}}</h4>
+    <form #employeeForm="ngForm" (ngSubmit)="registerEmployee(employeeForm) ">
+        <div class="row" style="margin-top:40px;">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="form-group">
+                    <label>Employee Name: </label>
+                    <input type="text" [(ngModel)]="addemployeeObj.EmployeeName" name="EmployeeName" #EmployeeName="ngModel" class="form-control" required />
+                </div>
+
+                <div [hidden]="EmployeeName.valid || EmployeeName.pristine" class="alert alert-danger" style="margin-top:5px;">
+                    * Employee Name is required
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="form-group">
+                    <label>Gender: </label>
+                    <input class="w3-radio" type="radio" [(ngModel)]="addemployeeObj.Gender" value="true" name="Gender" #Gender="ngModel" required> Male
+                    <input class="w3-radio" type="radio" [(ngModel)]="addemployeeObj.Gender" value="false" name="Gender" #Gender="ngModel" required> Female
+                </div>
+                {{addemployeeObj.Gender}}
+                <div [hidden]="Gender.valid || Gender.pristine" class="alert alert-danger" style="margin-top:5px;">
+                    * Gender is required
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="form-group">
+                    <label>Employee Code: </label>
+                    <input type="text" [(ngModel)]="addemployeeObj.EmployeeCode" name="EmployeeCode" #EmployeeCode="ngModel" class="form-control" required />
+                </div>
+
+                <div [hidden]="EmployeeCode.valid || EmployeeCode.pristine" class="alert alert-danger" style="margin-top:5px;">
+                    * Employee Code is required
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="form-group">
+                    <label>Department: </label>
+                    <select class="form-control" [(ngModel)]="department" #DepartmentName="ngModel" required name="DepartmentId" (ngModelChange)="onChange($event)">
+                        <option value="">-- Select Department --</option>
+                        <option [ngValue]="i.Id" *ngFor="let i of addemployeeObj.EmployeeDepartment">{{i.DepartmentName}}</option>
+                    </select>
+                </div>
+                <div [hidden]="DepartmentName.valid || DepartmentName.pristine" class="alert alert-danger" style="margin-top:5px;">
+                    * Department is required
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="form-group">
+                    <label>Desgination: </label>
+                    <select class="form-control" [(ngModel)]="designation" required name="DesignationId" #EmployeeDesignation="ngModel">
+                        <option value="">-- Select Designation --</option>
+                        <option [ngValue]="i.Id" *ngFor="let i of addemployeeObj.EmployeeDesignation">{{i.DesignationName}}</option>
+                    </select>
+                </div>
+
+                <div [hidden]="EmployeeDesignation.valid || EmployeeDesignation.pristine" class="alert alert-danger" style="margin-top:5px;">
+                    * Designation is required
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="form-group">
+                    <label>Is Technology Enabled :</label>
+                    <input #IsTechnologyEnabled="ngModel" [(ngModel)]="addemployeeObj.IsTechnology" name="IsTechnologyEnabled"  class="w3-check" type="checkbox">
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="addemployeeObj.IsTechnology == true">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="form-group">
+                    <label>Technology: </label>
+                    <!--<input type="text" [(ngModel)]="addemployeeObj.Technology" name="Technology" #Technology="ngModel" class="form-control" required />-->
+
+                    <select class="form-control" [(ngModel)]="addemployeeObj.Technology.Technology" name="Technology" #Technology="ngModel" required>
+                        <option value="-- Select Technology --">-- Select Technology--</option>
+                        <option *ngFor="let n of addemployeeObj.Technology" [attr.value]="n.Id">{{n.Technology}}</option>
+                    </select>
+                </div>
+
+                <div [hidden]="Technology.valid || Technology.pristine" class="alert alert-danger" style="margin-top:5px;">
+                    * Technology is required
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <input type="submit" class="btn btn-primary" [disabled]="employeeForm.invalid" value="Add">
+                <input type="button" class="btn btn-default" (click)="clear(employeeForm)" [disabled]="!employeeForm.dirty" value="Clear">
+            </div>
+        </div>
+    </form>
+</div>
+
+<modal #SucessModel>
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">Success!</h4>
+    </modal-header>
+    <modal-body>
+        Employee Details Added!
+    </modal-body>
+    <modal-footer [show-default-buttons]="true"></modal-footer>
+</modal>
+
+
+<modal #FailurModel>
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">Failed!</h4>
+    </modal-header>
+    <modal-body>
+        Error Has been occured not able to add Employee Details!
+    </modal-body>
+    <modal-footer [show-default-buttons]="true"></modal-footer>
+</modal>

@@ -1,0 +1,28 @@
+﻿<div class="container">
+    <h2>{{employeeListObj.Title}}</h2>
+    <div class="table-responsive table-bordered table-striped table-hover ">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Employee Gender</th>
+                    <th>Employee Code</th>
+                    <th>Department Name</th>
+                    <th>Employee Desgination</th>
+                    <th>Technology</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor ="let employee of employeeListObj.EmpDataList">
+                    <td>{{employee.EmployeeName}}</td>
+                    <td *ngIf="employee.Gender == true">Male</td>
+                    <td *ngIf="employee.Gender == false">Female</td>
+                    <td>{{employee.EmployeeCode}}</td>
+                    <td>{{employee.DepartmentName}}</td>
+                    <td>{{employee.DesginationName}}</td>
+                    <td>{{employee.Technology}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

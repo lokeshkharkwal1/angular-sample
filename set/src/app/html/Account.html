@@ -1,0 +1,118 @@
+﻿<div class="container">
+    <h1>User Control Portal</h1>
+
+    <table class="table table-bordered table-striped table-condensed">
+        <tr>
+            <td>
+                <form #userRegisterForm="ngForm" (ngSubmit)="registerUser(userRegisterForm)">
+                    <table class="table table-bordered table-striped table-condensed">
+                        <tr>
+                            <td>Email:</td>
+                            <td>
+                                <input type="email" class="form-control"
+                                       [(ngModel)]="registerObj.userRegistrationEmail" name="Email" #Email="ngModel" required />
+
+                                <div [hidden]="Email.valid || Email.pristine" class="alert alert-danger" style="margin-top:5px;">
+                                    * Email is required
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Password:</td>
+                            <td>
+                                <input type="password" class="form-control"
+                                       [(ngModel)]="registerObj.userRegistrationPassword" name="Password" #Password="ngModel" required />
+
+                                <div [hidden]="Password.valid || Password.pristine" class="alert alert-danger" style="margin-top:5px;">
+                                    * Password is required
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Confirm Password:</td>
+                            <td>
+                                <input type="password" class="form-control"
+                                       [(ngModel)]="registerObj.userRegistrationConfirmPassword" name="ConfirmPassword" #ConfirmPassword="ngModel" required />
+
+                                <div [hidden]="ConfirmPassword.valid || ConfirmPassword.pristine" class="alert alert-danger" style="margin-top:5px;">
+                                    * Comfirm Password is required
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="submit" value="Register"
+                                       class="btn btn-success" [disabled]="userRegisterForm.invalid" />
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </td>
+            <td></td>
+            <td></td>
+            <td>
+                <form #userLoginForm="ngForm" (ngSubmit)="loginUser(userLoginForm)">
+                    <table class="table table-bordered table-striped table-condensed">
+                        <tr>
+                            <td>Email:</td>
+                            <td>
+                                <input type="text" class="form-control"
+                                       [(ngModel)]="loginObj.userLoginEmail" name="userLoginEmail" #userLoginEmail="ngModel" required />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Password:</td>
+                            <td>
+                                <input type="password"
+                                       class="form-control"
+                                       [(ngModel)]="loginObj.userLoginPassword" name="userLoginPassword" #userLoginPassword="ngModel" required />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            
+                            <td>
+                                <input type="hidden"
+                                       class="form-control"
+                                       [(ngModel)]="loginObj.grant_type" name="grant_type" #userLoginPassword="ngModel" required />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="submit" value="Login" class="btn btn-success" [disabled]="userLoginForm.invalid" />
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<modal #SucessModel>
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">Success!</h4>
+    </modal-header>
+    <modal-body>
+        Employee Details Added!
+    </modal-body>
+    <modal-footer [show-default-buttons]="true"></modal-footer>
+</modal>
+
+
+<modal #FailurModel [backdrop]="false">
+    <modal-header [show-close]="true">
+        <h4 class="modal-title">Failed!</h4>
+    </modal-header>
+    <modal-body>
+        {{registerObj.registerErrorResponseMessage}}
+    </modal-body>
+    <modal-footer [show-default-buttons]="true"></modal-footer>
+</modal>

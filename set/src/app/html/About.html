@@ -1,0 +1,175 @@
+﻿<div class="Container">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            {{aboutObj.Title}}
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-2">
+                    <b>
+                        <mark>
+                            {{aboutObj.Content}}
+                        </mark>
+                    </b>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="configuration-section">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        Search Criteria:
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <label>Search By Id:</label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="checkbox" class="w3-radio" [(ngModel)]="configurationObj.ById" [checked] ="configurationObj.ById" (change)="checkBoxChecked('id')"  #searchById="ngModel" />
+                                   
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <label>Search By Name:</label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="checkbox" class="w3-check" [(ngModel)]="configurationObj.ByName" #searchByName="ngModel" (change)="checkBoxChecked('name')" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <label>Search By Department:</label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="checkbox" class="w3-check" [(ngModel)]="configurationObj.ByDepartment" #searchByDepartment="ngModel" (change)="checkBoxChecked('department')" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <label>Search By Desgination:</label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="checkbox" class="w3-check" [(ngModel)]="configurationObj.ByDesignation" #searchByDesignation="ngModel" (change)="checkBoxChecked('designation')" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="configurationObj.ById == true">
+        <div class="col-sm-6 col-sm-offset-3">
+            <form #fromItem="ngForm">
+                <div class="input-group">
+                    <input #searchVlaue type="number" class="form-control" placeholder="Enter Employee Id " name="search" searchVlaue.value='' ngModel required />
+                    <div class="input-group-btn">
+                        <input type="button" (click)="getEmployee(searchVlaue.value)" value="Get Employee" class="btn btn-primary" [disabled]="fromItem.invalid"> />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="row" *ngIf="configurationObj.ById != true">
+        <div class="col-sm-6 col-sm-offset-3">
+            <ng2-completer [(ngModel)]="searchStr" class="completer-input" [inputClass]="['form-control']" [placeholder]="configurationObj.PlaceholderValue" [textSearching]="'Please Wait! Searching...'" [datasource]="remoteData" [minSearchLength]="3" [clearSelected]="true" (selected)="onSelected($event)"></ng2-completer>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="aboutObj.ErrorMessage !=undefined" style="margin-top:20px">
+        <div class="col-sm-12">
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <b>Error Occured</b>
+                </div>
+                <div class="panel-body">
+                    {{aboutObj.ErrorMessage}}
+                    <br />
+                    No Data Found with respect to given Id.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row" *ngIf="aboutObj.EmpData != undefined && aboutObj.ErrorMessage == undefined" style="margin-top:20px">
+        <div class="col-sm-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <b>Employee Details: </b>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <b>Employee Name</b>
+                        </div>
+                        <div class="col-sm-5">
+                            <b><mark>{{aboutObj.EmpData.EmployeeName}}</mark></b>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <b>Employee Gender</b>
+                        </div>
+                        <div class="col-sm-5">
+                            <b *ngIf="aboutObj.EmpData.Gender == true"><mark>Male</mark></b>
+                            <b *ngIf="aboutObj.EmpData.Gender == false"><mark>Female</mark></b>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <b>Employee Code</b>
+                        </div>
+                        <div class="col-sm-5">
+                            <b><mark>{{aboutObj.EmpData.EmployeeCode}}</mark></b>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <b>Employee Department</b>
+                        </div>
+                        <div class="col-sm-5">
+                            <b><mark>{{aboutObj.EmpData.DepartmentName}}</mark></b>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <b>Employee Designation</b>
+                        </div>
+                        <div class="col-sm-5">
+                            <b><mark>{{aboutObj.EmpData.DesginationName}}</mark></b>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <b>Technology</b>
+                        </div>
+                        <div class="col-sm-5">
+                            <b><mark>{{aboutObj.EmpData.Technology}}</mark></b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
